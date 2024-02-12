@@ -43,10 +43,13 @@ cd ./AE_Geometry_and_Conditional_Latent_Diffusion
 # sample latent embeddings
 python -m scripts.sample_z configs/training.yml
 
-# reconstruct molecular graphs
+# reconstruct 2d
 python -m scripts.sample_2d
 
-# reconstruct molecular conformer
+# reconstruct 3d
 python -m scripts.sample_3d configs/sampling.yml
+
+# evaluate
+python -m scripts.evaluate_diffusion outputs --docking_mode vina_score --protein_root data/test_set --data_id $data_id
 ```
 
