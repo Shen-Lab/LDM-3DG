@@ -1,4 +1,4 @@
-# Latent_3D_Graph_Diffusion
+# Latent 3D Graph Diffusion
 
 ### Training Topological AE
 download data and model weights from https://drive.google.com/file/d/1eQOsGfw_XP5S0e1gj0pEJaObU-8i2Y_b/view?usp=sharing
