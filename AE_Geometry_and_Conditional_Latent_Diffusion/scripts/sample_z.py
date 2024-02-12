@@ -131,7 +131,7 @@ if __name__ == '__main__':
     logger.info(f'# trainable parameters: {misc.count_parameters(model) / 1e6:.4f} M')
 
     model.eval()
-    num_sample = 500
+    num_sample = 1000
     zs = []
     emb_prots = []
     for batch in val_loader:
