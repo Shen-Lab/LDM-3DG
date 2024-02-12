@@ -1,5 +1,7 @@
 # Latent 3D Graph Diffusion
 
+## Conditional Generation on Protein Target
+
 ### Training Topological AE
 download data and model weights from https://drive.google.com/file/d/1eQOsGfw_XP5S0e1gj0pEJaObU-8i2Y_b/view?usp=sharing
 ```
@@ -13,6 +15,11 @@ python preprocess.py --train ./AE_topo_weights_and_data/smiles_mol3d_chembl_trai
 
 # train ae
 python train_generator_ptl.py  --ddp_num_nodes 1 --ddp_device 1 --train ./AE_topo_weights_and_data/processed_data_pocket_train --vocab ./AE_topo_weights_and_data/vocab_pocket_aware.txt --save_dir ./AE_topo_weights_and_data/ckpt/pocket_pretrained
+# if train ae with gssl
+python train_generator_gssl_ptl.py  --ddp_num_nodes 1 --ddp_device 1 --train ./AE_topo_weights_and_data/processed_data_pocket_train --vocab ./AE_topo_weights_and_data/vocab_pocket_aware.txt --save_dir ./AE_topo_weights_and_data/ckpt/pocket_pretrained_gssl
+
+# generate smiles to emb dictionary
+python generate_embedding.py --train ./AE_topo_weights_and_data/processed_data_pocket --vocab ./AE_topo_weights_and_data/vocab_pocket_aware.txt --ckpt ./AE_topo_weights_and_data/ckpt/pocket_pretrained/last.ckpt --save_fn ./smiles2emb_dict_pocket.pt
 ```
 
 ### Training Geometric AE
