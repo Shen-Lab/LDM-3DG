@@ -4,7 +4,7 @@
 ## Unconditional Generation
 
 ### Training Topological AE
-you also can download data, model weights and samples from https://drive.google.com/file/d/1eQOsGfw_XP5S0e1gj0pEJaObU-8i2Y_b/view?usp=sharing
+you can download data and model weights from https://drive.google.com/file/d/1eQOsGfw_XP5S0e1gj0pEJaObU-8i2Y_b/view?usp=sharing
 ```
 cd ./AE_Topology
 
@@ -28,7 +28,7 @@ python generate_embedding.py --train ./AE_topo_weights_and_data/processed_data -
 ## Conditional Generation on Protein Targets
 
 ### Training Topological AE
-you also can download data, model weights and samples from https://drive.google.com/file/d/1eQOsGfw_XP5S0e1gj0pEJaObU-8i2Y_b/view?usp=sharing
+you can download data and model weights from https://drive.google.com/file/d/1eQOsGfw_XP5S0e1gj0pEJaObU-8i2Y_b/view?usp=sharing
 ```
 cd ./AE_Topology
 
@@ -49,7 +49,7 @@ python generate_embedding.py --train ./AE_topo_weights_and_data/processed_data_p
 ```
 
 ### Training Geometric AE
-download data and model weights from https://drive.google.com/file/d/1Rzzoi7iBBrLuoa0-sCEhUSYrWXutue5M/view?usp=sharing
+you can download model weights and samples from https://drive.google.com/file/d/1Rzzoi7iBBrLuoa0-sCEhUSYrWXutue5M/view?usp=sharing
 
 download data following https://github.com/guanjq/targetdiff#data
 ```
