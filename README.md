@@ -69,7 +69,7 @@ cd ./AE_Geometry_and_Conditional_Latent_Diffusion
 python -m scripts.train_latent_diffusion configs/training.yml
 ```
 
-### Sampling
+### Sampling and evaluating
 ```
 cd ./AE_Geometry_and_Conditional_Latent_Diffusion
 
