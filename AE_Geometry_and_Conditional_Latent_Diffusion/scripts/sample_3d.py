@@ -183,60 +183,61 @@ if __name__ == '__main__':
     smiles = torch.load('./samples_latent/sample_smiles.pt')
     batch_size = zs.shape[1]
 
+    n_batch = 2
+    import math
+    batch_size2 = math.ceil(float(batch_size) / n_batch)
+
     for data_id in tqdm(range(100)):
-        zz = zs[data_id][:,250:].to('cuda')
         data = test_set[data_id]
-        smis = smiles[data_id*batch_size : (data_id+1)*batch_size]
-
-        feats = []
-        lig_batch = []
-        mols = []
-        for idx, ss in enumerate(smis):
-            mol = Chem.MolFromSmiles(ss)
-            AllChem.Compute2DCoords(mol)
-            feat = torch.tensor(get_ligand_atom_features(mol)[:,0])
-            feats.append(feat)
-            lig_batch.append(torch.ones(feat.shape[0], dtype=torch.int64) * idx)
-            mols.append(mol)
-
-        feats = torch.cat(feats).to('cuda')
-        lig_batch = torch.cat(lig_batch).to('cuda')
-
-        pred_pos, pred_v, pred_pos_traj, pred_v_traj, pred_v0_traj, pred_vt_traj, time_list = sample_diffusion_ligand(
-            model, data, config.sample.num_samples,
-            batch_size=batch_size, device=args.device,
-            num_steps=config.sample.num_steps,
-            pos_only=config.sample.pos_only,
-            center_pos_mode=config.sample.center_pos_mode,
-            sample_num_atoms=config.sample.sample_num_atoms,
-            emb=zz,
-            feats=feats,
-            lig_batch=lig_batch
-        )
-
-        from rdkit.Geometry import Point3D
-        idxs = []
         mols2 = []
-        for idx, mol in enumerate(mols):
-            try:
-                atom_type = [mol.GetAtomWithIdx(idx).GetAtomicNum() for idx in range(mol.GetNumAtoms())]
-                pred_pos = pred_pos[idx]
-                pred_aromatic = transforms.is_aromatic_from_index(np.array(atom_type), mode='add_aromatic')
-                mol = reconstruct.reconstruct_from_generated(pred_pos, atom_type, pred_aromatic)
+        zzs = zs[data_id][:,250:].to('cuda')
+        smiss = smiles[data_id*batch_size : (data_id+1)*batch_size]
+        for i in range(n_batch):
+            zz = zzs[i*batch_size2:(i+1)*batch_size2]
+            smis = smiss[i*batch_size2:(i+1)*batch_size2]
 
-                idxs.append( idx )
-                mols2.append( mol )
-            except:
-                continue
-        idxs = np.array(idxs)
+            feats = []
+            lig_batch = []
+            mols = []
+            for idx, ss in enumerate(smis):
+                mol = Chem.MolFromSmiles(ss)
+                AllChem.Compute2DCoords(mol)
+                feat = torch.tensor(get_ligand_atom_features(mol)[:,0])
+                feats.append(feat)
+                lig_batch.append(torch.ones(feat.shape[0], dtype=torch.int64) * idx)
+                mols.append(mol)
 
+            feats = torch.cat(feats).to('cuda')
+            lig_batch = torch.cat(lig_batch).to('cuda')
+
+            pred_pos, pred_v, pred_pos_traj, pred_v_traj, pred_v0_traj, pred_vt_traj, time_list = sample_diffusion_ligand(
+                model, data, config.sample.num_samples,
+                batch_size=batch_size2, device=args.device,
+                num_steps=config.sample.num_steps,
+                pos_only=config.sample.pos_only,
+                center_pos_mode=config.sample.center_pos_mode,
+                sample_num_atoms=config.sample.sample_num_atoms,
+                emb=zz,
+                feats=feats,
+                lig_batch=lig_batch
+            )
+
+            from rdkit.Geometry import Point3D
+            idxs = []
+            for idx, mol in enumerate(mols):
+                try:
+                    atom_type = [mol.GetAtomWithIdx(idx).GetAtomicNum() for idx in range(mol.GetNumAtoms())]
+                    pred_pos = pred_pos[idx]
+                    pred_aromatic = transforms.is_aromatic_from_index(np.array(atom_type), mode='add_aromatic')
+                    mol = reconstruct.reconstruct_from_generated(pred_pos, atom_type, pred_aromatic)
+
+                    idxs.append( idx )
+                    mols2.append( mol )
+                except:
+                    continue
 
         result = {
             'data': data,
-            'pred_ligand_pos': pred_pos[idxs],
-            'pred_ligand_v': pred_v[idxs],
-            'pred_ligand_pos_traj': pred_pos_traj[idxs],
-            'pred_ligand_v_traj': pred_v_traj[idxs],
             'mols': mols2
         }
         logger.info('Sample done!')
@@ -245,3 +246,4 @@ if __name__ == '__main__':
         os.makedirs(result_path, exist_ok=True)
         shutil.copyfile(args.config, os.path.join(result_path, 'sample.yml'))
         torch.save(result, os.path.join(result_path, f'result_{data_id}.pt'))
+

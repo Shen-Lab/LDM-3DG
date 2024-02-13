@@ -80,12 +80,10 @@ if __name__ == '__main__':
         data = r['data']
         poc_coor, dis = get_pocket_coords(data.ligand_pos.numpy(), data.protein_pos.numpy())
 
-        all_pred_ligand_pos = r['pred_ligand_pos_traj']  # [num_samples, num_steps, num_atoms, 3]
-        all_pred_ligand_v = r['pred_ligand_v_traj']
         mols = r['mols']
-        num_samples += len(all_pred_ligand_pos)
+        num_samples += len(mols)
 
-        for sample_idx, (pred_pos, pred_v, mol) in enumerate(zip(all_pred_ligand_pos, all_pred_ligand_v, mols)):
+        for sample_idx, mol in enumerate(mols):
             atoms = [] ; flag = False
             for idx in range(mol.GetNumAtoms()):
                 atom = mol.GetAtomWithIdx(idx)
@@ -94,9 +92,7 @@ if __name__ == '__main__':
                     break
             if flag: continue
 
-
-            pred_pos, pred_v = pred_pos[args.eval_step], pred_v[args.eval_step]
-
+            pred_pos = mol.GetConformer(0).GetPositions()
             dis = get_pocket_coords(pred_pos, poc_coor.numpy())[1].mean()
 
 
@@ -140,8 +136,6 @@ if __name__ == '__main__':
                 'dis': dis,
                 # 'smiles': smiles,
                 'ligand_filename': r['data'].ligand_filename,
-                # 'pred_pos': pred_pos,
-                # 'pred_v': pred_v,
                 'chem_results': chem_results,
                 'vina': vina_results
             })
