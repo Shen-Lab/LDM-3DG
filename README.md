@@ -58,6 +58,7 @@ python main_latent_ddpm_drug.py --ddp_num_nodes 1 --ddp_device 1 --data_dir ../e
 
 ### Sampling
 ```
+cd ./AE_Geometry_and_Unconditional_Latent_Diffusion
 python sample1_latent_ddpm_qm9_latent.py --log_dir $log_dir --sample_number $sample_number
 # for conditional generation
 python sample1_latent_ddpm_qm9_z_conditional.py --log_dir $log_dir --condition $condition
@@ -68,6 +69,7 @@ python sample3_latent_ddpm_qm9_3d.py --log_dir $log_dir
 
 ### Evaluating
 ```
+cd ./AE_Geometry_and_Unconditional_Latent_Diffusion
 evaluate_unconditional.ipynb
 evaluate_conditional.ipynb
 ```
