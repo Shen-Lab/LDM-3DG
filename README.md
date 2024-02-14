@@ -45,7 +45,6 @@ python process_qm9_yy.py
 python build_geom_dataset.py
 ```
 
-
 ### Training Diffusion Model
 ```
 cd ./AE_Geometry_and_Unconditional_Latent_Diffusion
@@ -55,6 +54,13 @@ python main_latent_ddpm_qm9.py --ddp_num_nodes 1 --ddp_device 1 --data_dir ../e3
 python main_latent_ddpm_qm9_conditional.py --condition $condition --ddp_num_nodes 1 --ddp_device 1 --data_dir ../e3_diffusion_for_molecules/qm9/latent_diffusion/emb_2d_3d --log_dir ../AE_geom_uncond_weights_and_data/job21_latent_ddpm_qm9_condition_${condition}
 # drug
 python main_latent_ddpm_drug.py --ddp_num_nodes 1 --ddp_device 1 --data_dir ../e3_diffusion_for_molecules/data/geom --log_dir ../AE_geom_uncond_weights_and_data/job18_latent_ddpm_drug
+```
+
+### Sampling
+```
+python sample1_latent_ddpm_qm9_latent.py --log_dir $log_dir --sample_number $sample_number
+python sample2_latent_ddpm_qm9_2d.py --log_dir $log_dir
+python sample3_latent_ddpm_qm9_3d.py --log_dir $log_dir
 ```
 
 
