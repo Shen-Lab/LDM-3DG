@@ -9,7 +9,7 @@ download data and model weights from https://drive.google.com/file/d/1eQOsGfw_XP
 cd ./AE_Topology
 
 # get vocabulary for molecular graphs
-python get_vocab.py --ncpu 40 < ./AE_topo_weights_and_data/smiles_chembl_mol3d_qm9_drugs.txt > ../AE_topo_weights_and_data/vocab.txt
+python get_vocab.py --ncpu 40 < ../AE_topo_weights_and_data/smiles_chembl_mol3d_qm9_drugs.txt > ../AE_topo_weights_and_data/vocab.txt
 
 # preprocess data for more efficient loading
 python preprocess.py --train ../AE_topo_weights_and_data/smiles_mol3d_chembl_train.txt --vocab vocab.txt --ncpu 40 --mode single --out_path ../AE_topo_weights_and_data/processed_data_train/
@@ -59,6 +59,9 @@ python main_latent_ddpm_drug.py --ddp_num_nodes 1 --ddp_device 1 --data_dir ../e
 ### Sampling
 ```
 python sample1_latent_ddpm_qm9_latent.py --log_dir $log_dir --sample_number $sample_number
+# for conditional generation
+python sample1_latent_ddpm_qm9_z_conditional.py --log_dir $log_dir --condition $condition
+
 python sample2_latent_ddpm_qm9_2d.py --log_dir $log_dir
 python sample3_latent_ddpm_qm9_3d.py --log_dir $log_dir
 ```

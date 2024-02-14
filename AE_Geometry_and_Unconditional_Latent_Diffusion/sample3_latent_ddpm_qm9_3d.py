@@ -17,7 +17,7 @@ from rdkit import Chem
 from rdkit.Chem import AllChem
 from rdkit.Geometry import Point3D
 # from utils_for_3d_embeddings import Model
-from main_2dto3d_encoder_decoder_4layer_new import Model
+from main_2dto3d_encoder_decoder import Model
 
 
 if __name__ == '__main__':
@@ -37,11 +37,8 @@ if __name__ == '__main__':
     device = 'cuda'
 
     # 3. decode C~p(C|G,z)
-    args2 = torch.load('./logs/job2_decoder_2d_to_3d_4layer_new/args.pt')
-    # model = Model.load_from_checkpoint('./logs/job2_decoder_2d_to_3d_4layer_new/checkpoint-best.ckpt', args=args2).decoder_2dto3d.to(device)
-    # model = Model.load_from_checkpoint('./logs/job2_decoder_2d_to_3d_4layer_new/last.ckpt', args=args2).decoder_2dto3d.to(device)
-    # model = Model.load_from_checkpoint('./logs/job16_decoder_2d_to_3d_spatial_graphs_no_contras/last.ckpt', args=args2).decoder_2dto3d.to(device)
-    model = Model.load_from_checkpoint('./logs/job16_decoder_2d_to_3d_spatial_graphs/last.ckpt', args=args2).decoder_2dto3d.to(device)
+    args2 = torch.load('../AE_geom_uncond_weights_and_data/job16_decoder_2d_to_3d_spatial_graphs/args.pt')
+    model = Model.load_from_checkpoint('../AE_geom_uncond_weights_and_data/job16_decoder_2d_to_3d_spatial_graphs/last.ckpt', args=args2).decoder_2dto3d.to(device)
     model.eval()
 
     samples = torch.load(args.log_dir + '/sample_z.pt')
@@ -51,22 +48,9 @@ if __name__ == '__main__':
     z_batch = []
     batch_size = 32
     mol3d_list = []
-    # for idx, smi in enumerate(tqdm(smiles[:100])):
     for idx, smi in enumerate(tqdm(smiles)):
-        # # debug
-        # if smi is None:
-        #     smi = 'CCBr'
-
         mol = Chem.MolFromSmiles(smi)
         mol = Chem.AddHs(mol)
-
-        # try:
-        #     AllChem.EmbedMolecule(mol, maxAttempts=5000)
-        #     AllChem.MMFFOptimizeMolecule(mol)
-        # except:
-        #     AllChem.Compute2DCoords(mol)
-        #     print(smi)
-        # positions = mol.GetConformers()[0].GetPositions()
 
         try:
             AllChem.EmbedMolecule(mol, maxAttempts=5000)
@@ -105,8 +89,6 @@ if __name__ == '__main__':
                 pos_batch = model(batch, emb[:, 250:])[0][-1]
             pos_batch = tgeom.utils.unbatch(pos_batch, batch.batch)
 
-            # pdb.set_trace()
-
             # set coordinate for molecules
             for mol, pos in zip(mol_batch, pos_batch):
                 # AllChem.Compute2DCoords(mol)
@@ -125,4 +107,3 @@ if __name__ == '__main__':
             z_batch = []
 
     torch.save(mol3d_list, args.log_dir + '/sample_conformer.pt')
-    # torch.save(mol3d_list, 'sample_conformer_debug.pt')

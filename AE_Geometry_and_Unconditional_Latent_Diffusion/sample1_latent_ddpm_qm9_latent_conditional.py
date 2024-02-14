@@ -44,7 +44,7 @@ if __name__ == '__main__':
     parser.add_argument('--log_dir', type=str, default='./logs/debug')
     parser.add_argument('--condition', type=str, default='alpha')
 
-    parser.add_argument('--data_dir', type=str, default='/scratch/user/yuning.you/project/graph_latent_diffusion/e3_diffusion_for_molecules/qm9/latent_diffusion/emb_2d_3d_4layer_new/')
+    parser.add_argument('--data_dir', type=str, default='../e3_diffusion_for_molecules/qm9/latent_diffusion/emb_2d_3d/')
 
     parser.add_argument('--sample_number', type=int, default=100000)
     parser.add_argument('--dim_condition', type=int, default=16)
@@ -78,15 +78,6 @@ if __name__ == '__main__':
     cond_max, cond_min = condition_train.max().item(), condition_train.min().item()
     print(cond_max, cond_min, cond_mean, cond_mad)
 
-    # condition_holdout = torch.tensor((data[args.condition] - cond_mean) / cond_mad)[idx_holdout]
-    # cond_holdout_max, cond_holdout_min = condition_holdout.max().item(), condition_holdout.min().item()
-    # print(cond_holdout_max, cond_holdout_min)
-    # assert False
-
-    # sampling number = 100 * 1000 * 3 = 300000, ood distribution for the last two
-    # condition = torch.tensor( np.concatenate([np.linspace(cond_min, cond_max, 100) for _ in range(1000)]
-    #                                        + [np.linspace(cond_min * 1.5, cond_min, 100) for _ in range(1000)]
-    #                                        + [np.linspace(cond_max, cond_max * 1.5, 100) for _ in range(1000)] ), dtype=torch.float32 ).to(device)
     condition = torch.tensor( np.concatenate([np.linspace(cond_min, cond_max, 100) for _ in range(10)]
                                            + [np.linspace(cond_min * 1.5, cond_min, 100) for _ in range(10)]
                                            + [np.linspace(cond_max, cond_max * 1.5, 100) for _ in range(10)] ), dtype=torch.float32 ).to(device)

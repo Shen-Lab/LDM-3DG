@@ -65,8 +65,7 @@ if __name__ == '__main__':
     model = Model.load_from_checkpoint(args.log_dir + '/checkpoint-best.ckpt', args=args2)
 
     # calculate nll
-    # data = np.load('/scratch/user/yuning.you/project/graph_latent_diffusion/e3_diffusion_for_molecules/qm9/latent_diffusion/emb_2d_3d/test.npz')
-    data = np.load('/scratch/user/yuning.you/project/graph_latent_diffusion/e3_diffusion_for_molecules/qm9/latent_diffusion/emb_2d_3d_4layer_new/test.npz')
+    data = np.load('../e3_diffusion_for_molecules/qm9/latent_diffusion/emb_2d_3d/test.npz')
     dataset_test = torch.utils.data.TensorDataset(torch.tensor( np.concatenate([data['emb_2d'], data['emb_3d']], axis=1) ))
     dataloader_test = torch.utils.data.DataLoader(dataset_test, batch_size=args2.batch_size*8, shuffle=False, num_workers=4)
     trainer = pl.Trainer(max_epochs=1, gradient_clip_val=5, check_val_every_n_epoch=5, default_root_dir=args.log_dir, num_sanity_val_steps=10, accelerator='gpu', strategy='ddp', num_nodes=args.ddp_num_nodes, devices=args.ddp_device)
@@ -82,15 +81,6 @@ if __name__ == '__main__':
     # clip to [-1, 1]
     samples[samples>1] = 1
     samples[samples<-1] = -1
-
-    '''
-    data = np.load('/scratch/user/yuning.you/project/graph_latent_diffusion/e3_diffusion_for_molecules/qm9/latent_diffusion/emb_2d_3d/test.npz')
-    data = torch.tensor( np.concatenate([data['emb_2d'], data['emb_3d']], axis=1) ).to(device)
-    print(model.neg_loglikelihood(data[0]))
-    print(samples.std(dim=0)[:20])
-    print(data.std(dim=0)[:20])
-    pdb.set_trace()
-    '''
 
     torch.save(samples, args.log_dir + '/sample_z.pt')
 
