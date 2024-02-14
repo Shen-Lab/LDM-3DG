@@ -56,7 +56,6 @@ class Model(pl.LightningModule):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    # parser.add_argument('--data_dir', type=str, default='/scratch/user/yuning.you/project/graph_latent_diffusion/e3_diffusion_for_molecules/qm9/latent_diffusion/emb_2d_3d_4layer_new/')
     parser.add_argument('--data_dir', type=str, default='')
 
     parser.add_argument('--log_dir', type=str, default='./logs/debug')

@@ -49,7 +49,7 @@ class Model(pl.LightningModule):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--data_dir', type=str, default='/scratch/user/yuning.you/project/graph_latent_diffusion/e3_diffusion_for_molecules/data/geom')
+    parser.add_argument('--data_dir', type=str, default='../e3_diffusion_for_molecules/data/geom')
 
     parser.add_argument('--log_dir', type=str, default='./logs/debug')
     parser.add_argument('--batch_size', type=int, default=512)

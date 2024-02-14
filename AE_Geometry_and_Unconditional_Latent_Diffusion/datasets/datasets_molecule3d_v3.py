@@ -46,7 +46,7 @@ class Molecule3D(InMemoryDataset):
         self.data, self.slices = torch.load('./processed_data_2d_to_3d/data_' + split + '.pt')
         with open('./processed_data_2d_to_3d/smiles_' + split + '.txt', 'r') as f:
             self.smiles_list = f.read().split('\n')[:-1]
-        self.smiles2emb_dict = torch.load('/scratch/user/yuning.you/project/graph_latent_diffusion/hgraph2graph/hiervae_smiles2emb_dict.pt', map_location='cpu')
+        self.smiles2emb_dict = torch.load('../AE_topo_weights_and_data/smiles2emb_dict.pt', map_location='cpu')
 
         '''
         mol_list = self.get_mol_list('train')
@@ -95,7 +95,7 @@ class Molecule3D(InMemoryDataset):
         pass
 
     def process_yy(self, train_or_val='train'):
-        with open('/scratch/user/yuning.you/project/graph_latent_diffusion/data/smiles_mol3d_chembl_' + train_or_val + '.txt', 'r') as f:
+        with open('../AE_topo_weights_and_data/smiles_mol3d_chembl_' + train_or_val + '.txt', 'r') as f:
             smiles_list = f.read().split('\n')[:-1]
 
         data_list = []
@@ -219,7 +219,7 @@ class Molecule3D(InMemoryDataset):
         return '{}({})'.format(self.name, len(self))
 
     def get_mol_list(self, train_or_val='train'):
-        with open('/scratch/user/yuning.you/project/graph_latent_diffusion/data/smiles_mol3d_chembl_' + train_or_val + '.txt', 'r') as f:
+        with open('../AE_topo_weights_and_data/smiles_mol3d_chembl_' + train_or_val + '.txt', 'r') as f:
             smiles_dict = {smi: None for smi in f.read().split('\n')[:-1]}
 
         mol_list = []

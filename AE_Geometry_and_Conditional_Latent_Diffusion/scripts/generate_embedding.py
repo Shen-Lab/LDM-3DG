@@ -172,7 +172,7 @@ if __name__ == '__main__':
     ### YY: generate embedding
     from tqdm import tqdm
     from rdkit import Chem
-    smi2emb_dict = torch.load('/scratch/user/yuning.you/project/graph_latent_diffusion/hgraph2graph/hiervae_smiles2emb_dict_pocket.pt')
+    smi2emb_dict = torch.load('../AE_topo_weights_and_data/smiles2emb_dict_pocket.pt')
 
     emb_2d = []
     emb_3d = []
