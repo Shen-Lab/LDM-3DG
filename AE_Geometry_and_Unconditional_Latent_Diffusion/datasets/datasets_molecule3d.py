@@ -42,7 +42,7 @@ class Molecule3D(InMemoryDataset):
         self.data, self.slices = torch.load('./processed_data_2d_to_3d/data_' + split + '.pt')
         with open('./processed_data_2d_to_3d/smiles_' + split + '.txt', 'r') as f:
             self.smiles_list = f.read().split('\n')[:-1]
-        self.smiles2emb_dict = torch.load('/scratch/user/yuning.you/project/graph_latent_diffusion/hgraph2graph/hiervae_smiles2emb_dict.pt', map_location='cpu')
+        self.smiles2emb_dict = torch.load('../AE_topo_weights_and_data/smiles2emb_dict.pt', map_location='cpu')
 
         self.args=args
 

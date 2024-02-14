@@ -31,11 +31,11 @@ if __name__ == '__main__':
     samples = samples.reshape((n1*n2, n3))[:, :250]
 
     # 2. decode G~p(G|z)
-    args3 = torch.load('/scratch/user/yuning.you/project/graph_latent_diffusion/hgraph2graph/ckpt/args_new.pt')
-    vocab = [x.strip('\r\n ').split() for x in open('/scratch/user/yuning.you/project/graph_latent_diffusion/hgraph2graph/vocab_pocket_aware.txt')]
+    args3 = torch.load('../AE_topo_weights_and_data/args_new.pt')
+    vocab = [x.strip('\r\n ').split() for x in open('../AE_topo_weights_and_data/vocab_pocket_aware.txt')]
     args3.vocab = PairVocab(vocab)
     model = HierVAE(args3).to(device)
-    ckpt = torch.load('/scratch/user/yuning.you/project/graph_latent_diffusion/hgraph2graph/ckpt/pocket_pretrained/last.ckpt')
+    ckpt = torch.load('../AE_topo_weights_and_data/pocket_pretrained/last.ckpt')
     state_dict = {k[6:]:v for k,v in ckpt['state_dict'].items()}
     model.load_state_dict(state_dict)
     model.eval()
@@ -47,12 +47,6 @@ if __name__ == '__main__':
         batch = batch[0].to(device)
         with torch.no_grad():
             ss = model.decode(batch)
-
-            # try:
-            #     ss = model.decode(batch[:, :250])
-            # except:
-            #     ss = [None for _ in range(batch.shape[0])]
-
             smiles += ss
 
     torch.save(smiles, './samples_latent/sample_smiles.pt')
