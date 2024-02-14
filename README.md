@@ -66,6 +66,12 @@ python sample2_latent_ddpm_qm9_2d.py --log_dir $log_dir
 python sample3_latent_ddpm_qm9_3d.py --log_dir $log_dir
 ```
 
+### Evaluating
+```
+evaluate_unconditional.ipynb
+evaluate_conditional.ipynb
+```
+
 
 ## Conditional Generation on Geometric Object
 
