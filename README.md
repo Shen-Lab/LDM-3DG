@@ -28,6 +28,7 @@ python generate_embedding.py --train ../AE_topo_weights_and_data/processed_data 
 download model weights and samples from xxx
 
 ```
+cd ./AE_Geometry_and_Unconditional_Latent_Diffusion
 python main_2dto3d_encoder_decoder.py --ddp_num_nodes 1 --ddp_device 1 --log_dir ../AE_geom_uncond_weights_and_data/job16_decoder_2d_to_3d
 # if train ae with gssl
 python main_2dto3d_encoder_decoder_gssl.py --ddp_num_nodes 1 --ddp_device 1 --log_dir ../AE_geom_uncond_weights_and_data/job19_decoder_2d_to_3d_gssl
@@ -44,6 +45,15 @@ python process_qm9_yy.py
 python build_geom_dataset.py
 ```
 
+
+### Training Diffusion Model
+```
+cd ./AE_Geometry_and_Unconditional_Latent_Diffusion
+# qm9
+python main_latent_ddpm_qm9.py --ddp_num_nodes 1 --ddp_device 1 --data_dir ../e3_diffusion_for_molecules/qm9/latent_diffusion/emb_2d_3d --log_dir ./logs/job17_latent_ddpm_qm9
+# drug
+python main_latent_ddpm_drug.py --ddp_num_nodes 1 --ddp_device 1 --data_dir ../e3_diffusion_for_molecules/data/geom --log_dir ./logs/job18_latent_ddpm_drug
+```
 
 ## Conditional Generation on Geometric Object
 
