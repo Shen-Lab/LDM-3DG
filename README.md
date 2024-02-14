@@ -4,52 +4,72 @@
 ## Unconditional Generation
 
 ### Training Topological AE
-you can download data and model weights from https://drive.google.com/file/d/1eQOsGfw_XP5S0e1gj0pEJaObU-8i2Y_b/view?usp=sharing
+download data and model weights from https://drive.google.com/file/d/1eQOsGfw_XP5S0e1gj0pEJaObU-8i2Y_b/view?usp=sharing
 ```
 cd ./AE_Topology
 
 # get vocabulary for molecular graphs
-python get_vocab.py --ncpu 40 < ./AE_topo_weights_and_data/smiles_chembl_mol3d_qm9_drugs.txt > ./AE_topo_weights_and_data/vocab.txt
+python get_vocab.py --ncpu 40 < ./AE_topo_weights_and_data/smiles_chembl_mol3d_qm9_drugs.txt > ../AE_topo_weights_and_data/vocab.txt
 
 # preprocess data for more efficient loading
-python preprocess.py --train ./AE_topo_weights_and_data/smiles_mol3d_chembl_train.txt --vocab vocab.txt --ncpu 40 --mode single --out_path ./AE_topo_weights_and_data/processed_data_train/
-python preprocess.py --train ./AE_topo_weights_and_data/smiles_chembl_mol3d_qm9_drugs.txt --vocab vocab.txt --ncpu 40 --mode single --out_path ./AE_topo_weights_and_data/processed_data/
+python preprocess.py --train ../AE_topo_weights_and_data/smiles_mol3d_chembl_train.txt --vocab vocab.txt --ncpu 40 --mode single --out_path ../AE_topo_weights_and_data/processed_data_train/
+python preprocess.py --train ../AE_topo_weights_and_data/smiles_chembl_mol3d_qm9_drugs.txt --vocab vocab.txt --ncpu 40 --mode single --out_path ../AE_topo_weights_and_data/processed_data/
 
 # train ae
-python train_generator_ptl.py  --ddp_num_nodes 1 --ddp_device 1 --train ./AE_topo_weights_and_data/processed_data_train --vocab ./AE_topo_weights_and_data/vocab.txt --save_dir ./AE_topo_weights_and_data/ckpt/pretrained
+python train_generator_ptl.py  --ddp_num_nodes 1 --ddp_device 1 --train ../AE_topo_weights_and_data/processed_data_train --vocab ../AE_topo_weights_and_data/vocab.txt --save_dir ../AE_topo_weights_and_data/pretrained
 # if train ae with gssl
-python train_generator_gssl_ptl.py  --ddp_num_nodes 1 --ddp_device 1 --train ./AE_topo_weights_and_data/processed_data_train --vocab ./AE_topo_weights_and_data/vocab.txt --save_dir ./AE_topo_weights_and_data/ckpt/pretrained_gssl
+python train_generator_gssl_ptl.py  --ddp_num_nodes 1 --ddp_device 1 --train ../AE_topo_weights_and_data/processed_data_train --vocab ../AE_topo_weights_and_data/vocab.txt --save_dir ../AE_topo_weights_and_data/pretrained_gssl
 
 # generate smiles to emb dictionary
-python generate_embedding.py --train ./AE_topo_weights_and_data/processed_data --vocab ./AE_topo_weights_and_data/vocab.txt --ckpt ./AE_topo_weights_and_data/ckpt/pretrained/last.ckpt --save_fn ./smiles2emb_dict.pt
+python generate_embedding.py --train ../AE_topo_weights_and_data/processed_data --vocab ../AE_topo_weights_and_data/vocab.txt --ckpt ../AE_topo_weights_and_data/pretrained/last.ckpt --save_fn ../AE_topo_weights_and_data/smiles2emb_dict.pt
+```
+
+### Training Geometric AE
+download model weights and samples from xxx
+
+```
+python main_2dto3d_encoder_decoder.py --ddp_num_nodes 1 --ddp_device 1 --log_dir ../AE_geom_uncond_weights_and_data/job16_decoder_2d_to_3d
+# if train ae with gssl
+python main_2dto3d_encoder_decoder_gssl.py --ddp_num_nodes 1 --ddp_device 1 --log_dir ../AE_geom_uncond_weights_and_data/job19_decoder_2d_to_3d_gssl
+```
+
+### Generating embedding for qm9 and drugs
+download code from xxx
+```
+cd ./e3_diffusion_for_molecules
+# qm9
+python process_qm9_yy.py
+
+# drug: following steps 1-3 in https://github.com/ehoogeboom/e3_diffusion_for_molecules/tree/main/data/geom#how-to-build-geom-drugs to download data first
+python build_geom_dataset.py
 ```
 
 
 ## Conditional Generation on Protein Targets
 
 ### Training Topological AE
-you can download data and model weights from https://drive.google.com/file/d/1eQOsGfw_XP5S0e1gj0pEJaObU-8i2Y_b/view?usp=sharing
+download data and model weights from https://drive.google.com/file/d/1eQOsGfw_XP5S0e1gj0pEJaObU-8i2Y_b/view?usp=sharing
 ```
 cd ./AE_Topology
 
 # get vocabulary for molecular graphs
-python get_vocab.py --ncpu 40 < ./AE_topo_weights_and_data/smiles_plus.txt > ./AE_topo_weights_and_data/vocab_pocket_aware.txt
+python get_vocab.py --ncpu 40 < ../AE_topo_weights_and_data/smiles_plus.txt > ../AE_topo_weights_and_data/vocab_pocket_aware.txt
 
 # preprocess data for more efficient loading
-python preprocess.py --train ./AE_topo_weights_and_data/smiles_mol3d_chembl_train.txt --vocab vocab_pocket_aware.txt --ncpu 40 --mode single --out_path ./AE_topo_weights_and_data/processed_data_pocket_train/
-python preprocess.py --train ./AE_topo_weights_and_data/smiles_plus.txt --vocab vocab_pocket_aware.txt --ncpu 40 --mode single --out_path ./AE_topo_weights_and_data/processed_data_pocket/
+python preprocess.py --train ../AE_topo_weights_and_data/smiles_mol3d_chembl_train.txt --vocab ../AE_topo_weights_and_data/vocab_pocket_aware.txt --ncpu 40 --mode single --out_path ../AE_topo_weights_and_data/processed_data_pocket_train/
+python preprocess.py --train ../AE_topo_weights_and_data/smiles_plus.txt --vocab ../AE_topo_weights_and_data/vocab_pocket_aware.txt --ncpu 40 --mode single --out_path ../AE_topo_weights_and_data/processed_data_pocket/
 
 # train ae
-python train_generator_ptl.py  --ddp_num_nodes 1 --ddp_device 1 --train ./AE_topo_weights_and_data/processed_data_pocket_train --vocab ./AE_topo_weights_and_data/vocab_pocket_aware.txt --save_dir ./AE_topo_weights_and_data/ckpt/pocket_pretrained
+python train_generator_ptl.py  --ddp_num_nodes 1 --ddp_device 1 --train ../AE_topo_weights_and_data/processed_data_pocket_train --vocab ../AE_topo_weights_and_data/vocab_pocket_aware.txt --save_dir ../AE_topo_weights_and_data/pocket_pretrained
 # if train ae with gssl
-python train_generator_gssl_ptl.py  --ddp_num_nodes 1 --ddp_device 1 --train ./AE_topo_weights_and_data/processed_data_pocket_train --vocab ./AE_topo_weights_and_data/vocab_pocket_aware.txt --save_dir ./AE_topo_weights_and_data/ckpt/pocket_pretrained_gssl
+python train_generator_gssl_ptl.py  --ddp_num_nodes 1 --ddp_device 1 --train ../AE_topo_weights_and_data/processed_data_pocket_train --vocab ../AE_topo_weights_and_data/vocab_pocket_aware.txt --save_dir ../AE_topo_weights_and_data/pocket_pretrained_gssl
 
 # generate smiles to emb dictionary
-python generate_embedding.py --train ./AE_topo_weights_and_data/processed_data_pocket --vocab ./AE_topo_weights_and_data/vocab_pocket_aware.txt --ckpt ./AE_topo_weights_and_data/ckpt/pocket_pretrained/last.ckpt --save_fn ./smiles2emb_dict_pocket.pt
+python generate_embedding.py --train ../AE_topo_weights_and_data/processed_data_pocket --vocab ../AE_topo_weights_and_data/vocab_pocket_aware.txt --ckpt ../AE_topo_weights_and_data/pocket_pretrained/last.ckpt --save_fn ../AE_topo_weights_and_data/smiles2emb_dict_pocket.pt
 ```
 
 ### Training Geometric AE
-you can download model weights and samples from https://drive.google.com/file/d/1Rzzoi7iBBrLuoa0-sCEhUSYrWXutue5M/view?usp=sharing
+download model weights and samples from https://drive.google.com/file/d/1Rzzoi7iBBrLuoa0-sCEhUSYrWXutue5M/view?usp=sharing
 
 download data following https://github.com/guanjq/targetdiff#data
 ```
