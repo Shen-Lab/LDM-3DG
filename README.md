@@ -51,7 +51,7 @@ python main_2dto3d_encoder_decoder_gssl.py --ddp_num_nodes 1 --ddp_device 1 --lo
 ```
 
 ### Generating embedding for qm9 and drugs
-Download code and generated qm9 latent embeddings from xxx.
+Download code and generated qm9 latent embeddings from https://drive.google.com/file/d/1aZgOZSkjFKGIlebe23CQACVDYz8mcOh8/view?usp=drive_link.
 ```
 cd ./e3_diffusion_for_molecules
 # qm9
