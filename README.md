@@ -41,7 +41,7 @@ python generate_embedding.py --train ../AE_topo_weights_and_data/processed_data 
 ### Training Geometric AE
 Generic environment would work for the following programs, and my conda environment file https://github.com/Shen-Lab/LDM-3DG/blob/main/environment.yml is also provided for reference.
 
-Download model weights and samples from xxx
+Download trained model weights and generated samples from xxx.
 
 ```
 cd ./AE_Geometry_and_Unconditional_Latent_Diffusion
@@ -51,7 +51,7 @@ python main_2dto3d_encoder_decoder_gssl.py --ddp_num_nodes 1 --ddp_device 1 --lo
 ```
 
 ### Generating embedding for qm9 and drugs
-Download code from xxx (qm9 latent embeddings are included, but not drug)
+Download code and generated qm9 latent embeddings from xxx.
 ```
 cd ./e3_diffusion_for_molecules
 # qm9
@@ -94,7 +94,7 @@ evaluate_conditional.ipynb
 ## 2. Conditional Generation on Geometric Object
 
 ### Training Topological AE
-Download data and model weights from https://drive.google.com/file/d/1eQOsGfw_XP5S0e1gj0pEJaObU-8i2Y_b/view?usp=sharing
+Download data, trained model weights and generated samples from https://drive.google.com/file/d/1eQOsGfw_XP5S0e1gj0pEJaObU-8i2Y_b/view?usp=sharing.
 ```
 cd ./AE_Topology
 
@@ -115,7 +115,7 @@ python generate_embedding.py --train ../AE_topo_weights_and_data/processed_data_
 ```
 
 ### Training Geometric AE
-Download model weights and samples from https://drive.google.com/file/d/1Rzzoi7iBBrLuoa0-sCEhUSYrWXutue5M/view?usp=sharing
+Download trained model weights and samples from https://drive.google.com/file/d/1Rzzoi7iBBrLuoa0-sCEhUSYrWXutue5M/view?usp=sharing
 
 Download data following https://github.com/guanjq/targetdiff#data
 ```
