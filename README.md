@@ -57,7 +57,7 @@ cd ./e3_diffusion_for_molecules
 # qm9
 python process_qm9.py
 
-# drug: following steps 1-3 in https://github.com/ehoogeboom/e3_diffusion_for_molecules/tree/main/data/geom#how-to-build-geom-drugs to download data first
+# Drug: following steps 1-3 in https://github.com/ehoogeboom/e3_diffusion_for_molecules/tree/main/data/geom#how-to-build-geom-drugs to download data first
 python build_geom_dataset.py
 ```
 
