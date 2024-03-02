@@ -6,6 +6,9 @@ Yuning You, Ruida Zhou, Jiwoong Park, Haotian Xu, Chao Tian, Zhangyang Wang, Yan
 
 In ICLR 2024.
 
+## Overview
+A pipeline to compress 3D graphs into the latent space, where a (vectorial) diffusion model is implemented to capture the distribution.
+
 ## Unconditional Generation
 
 ### Training Topological AE
