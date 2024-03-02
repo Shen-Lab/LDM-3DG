@@ -39,7 +39,7 @@ download code from xxx (qm9 latent embeddings are included, but not drug)
 ```
 cd ./e3_diffusion_for_molecules
 # qm9
-python process_qm9_yy.py
+python process_qm9.py
 
 # drug: following steps 1-3 in https://github.com/ehoogeboom/e3_diffusion_for_molecules/tree/main/data/geom#how-to-build-geom-drugs to download data first
 python build_geom_dataset.py
@@ -136,3 +136,16 @@ python -m scripts.sample_3d configs/sampling.yml
 python -m scripts.evaluate_diffusion outputs --docking_mode vina_score --protein_root data/test_set --data_id $data_id
 ```
 
+
+## Citation
+
+If you use this code for you research, please cite our paper.
+
+```
+@inproceedings{you2023graph,
+  title={Graph Domain Adaptation via Theory-Grounded Spectral Regularization},
+  author={You, Yuning and Chen, Tianlong and Wang, Zhangyang and Shen, Yang},
+  booktitle={International Conference on Learning Representations},
+  year = {2023}
+}
+```
