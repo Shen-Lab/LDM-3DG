@@ -13,7 +13,7 @@ A pipeline to compress 3D graphs into the latent space, where a (vectorial) diff
 
 ![](./ldm_cond.png)
 
-## Unconditional Generation
+## 1. Unconditional Generation
 
 ### Training Topological AE
 Config environment following https://github.com/wengong-jin/hgraph2graph#installation, or my conda environment file https://github.com/Shen-Lab/LDM-3DG/blob/main/environment_topo_ae.yml.
@@ -91,7 +91,7 @@ evaluate_conditional.ipynb
 ```
 
 
-## Conditional Generation on Geometric Object
+## 2. Conditional Generation on Geometric Object
 
 ### Training Topological AE
 Download data and model weights from https://drive.google.com/file/d/1eQOsGfw_XP5S0e1gj0pEJaObU-8i2Y_b/view?usp=sharing
