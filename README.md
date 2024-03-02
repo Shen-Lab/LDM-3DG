@@ -9,6 +9,10 @@ In ICLR 2024.
 ## Overview
 A pipeline to compress 3D graphs into the latent space, where a (vectorial) diffusion model is implemented to capture the distribution.
 
+![](./ldm_uncond.png)
+
+![](./ldm_cond.png)
+
 ## Unconditional Generation
 
 ### Training Topological AE
