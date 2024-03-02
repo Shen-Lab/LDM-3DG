@@ -71,30 +71,30 @@ if __name__ == '__main__':
     success_pair_dist, success_atom_types = [], Counter()
     for example_idx, r_name in enumerate(tqdm(results_fn_list, desc='Eval')):
 
-        if not int(r_name.split('_')[1][:-3]) == args.data_id:
+        if not int(r_name.split('_')[-1][:-3]) == args.data_id:
             continue
 
         r = torch.load(r_name)  # ['data', 'pred_ligand_pos', 'pred_ligand_v', 'pred_ligand_pos_traj', 'pred_ligand_v_traj']
 
-        # calculate pocket distance
         data = r['data']
         poc_coor, dis = get_pocket_coords(data.ligand_pos.numpy(), data.protein_pos.numpy())
+        num_samples += len(r['atom_types'])
 
-        mols = r['mols']
-        num_samples += len(mols)
+        tmp_dir = os.path.join(args.sample_path, 'mols_' + str(args.data_id))
 
-        for sample_idx, mol in enumerate(mols):
+        for sample_idx, (pred_v, pred_pos) in enumerate(zip(r['atom_types'], r['pred_ligand_pos'])):
+
+            if 5 in pred_v:
+                continue
+
+            try:
+                pred_aromatic = transforms.is_aromatic_from_index(np.array(pred_v), mode='add_aromatic')
+                mol = reconstruct.reconstruct_from_generated(pred_pos, pred_v, pred_aromatic)
+            except:
+                continue
+
             atoms = [] ; flag = False
-            for idx in range(mol.GetNumAtoms()):
-                atom = mol.GetAtomWithIdx(idx)
-                if atom.GetAtomicNum() in [5]:
-                    flag = True
-                    break
-            if flag: continue
-
-            pred_pos = mol.GetConformer(0).GetPositions()
             dis = get_pocket_coords(pred_pos, poc_coor.numpy())[1].mean()
-
 
             # chemical and docking check
             try:
@@ -105,7 +105,7 @@ if __name__ == '__main__':
                     vina_results = vina_task.run_sync()
                 elif args.docking_mode in ['vina_score', 'vina_dock']:
                     vina_task = VinaDockingTask.from_generated_mol(
-                        mol, r['data'].ligand_filename, protein_root=args.protein_root)
+                        mol, r['data'].ligand_filename, protein_root=args.protein_root, tmp_dir=tmp_dir, task_id=str(sample_idx))
                     score_only_results = vina_task.run(mode='score_only', exhaustiveness=args.exhaustiveness)
                     minimize_results = vina_task.run(mode='minimize', exhaustiveness=args.exhaustiveness)
                     vina_results = {
@@ -128,13 +128,9 @@ if __name__ == '__main__':
             bond_dist = eval_bond_length.bond_distance_from_mol(mol)
             all_bond_dist += bond_dist
 
-            # success_pair_dist += pair_dist
-            # success_atom_types += Counter(pred_atom_type)
-
             results.append({
                 'mol': mol,
                 'dis': dis,
-                # 'smiles': smiles,
                 'ligand_filename': r['data'].ligand_filename,
                 'chem_results': chem_results,
                 'vina': vina_results
@@ -158,7 +154,6 @@ if __name__ == '__main__':
 
     if args.save:
         torch.save({
-            # 'stability': validity_dict,
-            # 'bond_length': all_bond_dist,
             'all_results': results
         }, os.path.join(result_path, f'metrics_{args.data_id}.pt'))
+

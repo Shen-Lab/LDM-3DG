@@ -138,11 +138,9 @@ python -m scripts.sample_z configs/training.yml
 # reconstruct 2d
 python -m scripts.sample_2d
 
-# reconstruct 3d
-python -m scripts.sample_3d configs/sampling.yml
-
-# evaluate
-python -m scripts.evaluate_diffusion outputs --docking_mode vina_score --protein_root data/test_set --data_id $data_id
+# reconstruct 3d and evaluate ($data_id in {0, 1, ..., 99})
+python -m scripts.sample_3d configs/sampling.yml --data_id $data_id
+python -m scripts.evaluate outputs --docking_mode vina_score --protein_root data/test_set --data_id $data_id
 ```
 
 

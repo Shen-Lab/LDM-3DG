@@ -129,10 +129,11 @@ def sample_diffusion_ligand(model, data, num_samples, batch_size=16, device='cud
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('config', type=str)
-    parser.add_argument('-i', '--data_id', type=int)
+    # parser.add_argument('-i', '--data_id', type=int)
     parser.add_argument('--device', type=str, default='cuda:0')
     parser.add_argument('--batch_size', type=int, default=100)
     parser.add_argument('--result_path', type=str, default='./outputs')
+    parser.add_argument('--data_id', type=int, default=0)
     args = parser.parse_args()
 
     logger = misc.get_logger('sampling')
@@ -173,8 +174,6 @@ if __name__ == '__main__':
     model.load_state_dict(ckpt['model'])
     logger.info(f'Successfully load the model! {config.model.checkpoint}')
 
-
-
     # start sampling
     from rdkit import Chem
     from datasets.protein_ligand import get_ligand_atom_features
@@ -183,15 +182,20 @@ if __name__ == '__main__':
     smiles = torch.load('./samples_latent/sample_smiles.pt')
     batch_size = zs.shape[1]
 
-    n_batch = 2
+    n_batch = 5
     import math
     batch_size2 = math.ceil(float(batch_size) / n_batch)
 
     for data_id in tqdm(range(100)):
+        if data_id != args.data_id:
+            continue
+
         data = test_set[data_id]
         mols2 = []
         zzs = zs[data_id][:,250:].to('cuda')
         smiss = smiles[data_id*batch_size : (data_id+1)*batch_size]
+        atom_typess = []
+        pred_posss = []
         for i in range(n_batch):
             zz = zzs[i*batch_size2:(i+1)*batch_size2]
             smis = smiss[i*batch_size2:(i+1)*batch_size2]
@@ -222,23 +226,15 @@ if __name__ == '__main__':
                 lig_batch=lig_batch
             )
 
-            from rdkit.Geometry import Point3D
             idxs = []
-            for idx, mol in enumerate(mols):
-                try:
-                    atom_type = [mol.GetAtomWithIdx(idx).GetAtomicNum() for idx in range(mol.GetNumAtoms())]
-                    pred_pos = pred_pos[idx]
-                    pred_aromatic = transforms.is_aromatic_from_index(np.array(atom_type), mode='add_aromatic')
-                    mol = reconstruct.reconstruct_from_generated(pred_pos, atom_type, pred_aromatic)
-
-                    idxs.append( idx )
-                    mols2.append( mol )
-                except:
-                    continue
+            for idx, mol in enumerate(tqdm(mols)):
+                atom_typess.append( [mol.GetAtomWithIdx(idx).GetAtomicNum() for idx in range(mol.GetNumAtoms())] )
+                pred_posss.append( pred_pos[idx] )
 
         result = {
             'data': data,
-            'mols': mols2
+            'atom_types': atom_typess,
+            'pred_ligand_pos': pred_posss,
         }
         logger.info('Sample done!')
 
