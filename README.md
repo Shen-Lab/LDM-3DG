@@ -1,5 +1,10 @@
 # Latent 3D Graph Diffusion
 
+PyTorch implementation for [Latent 3D Graph Diffusion](https://openreview.net/forum?id=cXbnGtO0NZ)
+
+Yuning You, Ruida Zhou, Jiwoong Park, Haotian Xu, Chao Tian, Zhangyang Wang, Yang Shen
+
+In ICLR 2024.
 
 ## Unconditional Generation
 
@@ -142,10 +147,10 @@ python -m scripts.evaluate_diffusion outputs --docking_mode vina_score --protein
 If you use this code for you research, please cite our paper.
 
 ```
-@inproceedings{you2023graph,
-  title={Graph Domain Adaptation via Theory-Grounded Spectral Regularization},
-  author={You, Yuning and Chen, Tianlong and Wang, Zhangyang and Shen, Yang},
+@inproceedings{you2024latent,
+  title={Latent 3D Graph Diffusion},
+  author={You, Yuning and Zhou, Ruida and Park, Jiwoong and Xu, Haotian and Tian, Chao and Wang, Zhangyang and Shen, Yang},
   booktitle={International Conference on Learning Representations},
-  year = {2023}
+  year = {2024}
 }
 ```
