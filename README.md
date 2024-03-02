@@ -18,7 +18,7 @@ A pipeline to compress 3D graphs into the latent space, where a (vectorial) diff
 ### Training Topological AE
 Config environment following https://github.com/wengong-jin/hgraph2graph#installation, or my conda environment file https://github.com/Shen-Lab/LDM-3DG/blob/main/environment_topo_ae.yml.
 
-Download data and trained model weights from https://drive.google.com/file/d/1eQOsGfw_XP5S0e1gj0pEJaObU-8i2Y_b/view?usp=sharing.
+Download data and trained model weights from https://drive.google.com/file/d/1tON3UDGP4rd4mgR1bofFoJKECg_yaCEK/view?usp=drive_link.
 ```
 cd ./AE_Topology
 
@@ -41,7 +41,7 @@ python generate_embedding.py --train ../AE_topo_weights_and_data/processed_data 
 ### Training Geometric AE
 Generic environment would work for the following programs, and my conda environment file https://github.com/Shen-Lab/LDM-3DG/blob/main/environment.yml is also provided for reference.
 
-Download trained model weights and generated samples from xxx.
+Download trained model weights and generated samples from https://drive.google.com/file/d/10-n32W8WMSo0qvVM4jqIgPfU05XSIfVx/view?usp=drive_link.
 
 ```
 cd ./AE_Geometry_and_Unconditional_Latent_Diffusion
@@ -92,7 +92,7 @@ evaluate_conditional.ipynb
 
 
 ## 2. Conditional Generation on Geometric Object
-Download data, trained model weights and generated samples from https://drive.google.com/file/d/1eQOsGfw_XP5S0e1gj0pEJaObU-8i2Y_b/view?usp=sharing.
+Download data, trained model weights and generated samples from https://drive.google.com/file/d/1razYUHMLu1W_4O3ZXMvQwHo02Bgn35oK/view?usp=drive_link.
 
 ### Training Topological AE
 ```
