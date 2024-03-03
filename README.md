@@ -151,7 +151,7 @@ python -m scripts.evaluate outputs --docking_mode vina_score --protein_root data
 
 ## Acknowledgements
 
-The implementation cannot proceed without referencing https://github.com/ehoogeboom/e3_diffusion_for_molecules, https://github.com/wengong-jin/hgraph2graph, https://github.com/directmolecularconfgen/dmcg, https://github.com/chaitjo/geometric-gnn-dojo, and https://github.com/guanjq/targetdiff.
+The implementation cannot proceed without referencing https://github.com/ehoogeboom/e3_diffusion_for_molecules, https://github.com/wengong-jin/hgraph2graph, https://github.com/directmolecularconfgen/dmcg, https://github.com/JeongJiHeon/ScoreDiffusionModel, https://github.com/chaitjo/geometric-gnn-dojo, and https://github.com/guanjq/targetdiff.
 
 
 ## Citation
