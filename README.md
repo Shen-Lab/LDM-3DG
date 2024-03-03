@@ -86,6 +86,7 @@ python sample3_latent_ddpm_qm9_3d.py --log_dir $log_dir
 ### Evaluating
 ```
 cd ./AE_Geometry_and_Unconditional_Latent_Diffusion
+# jupyter notebooks
 evaluate_unconditional.ipynb
 evaluate_conditional.ipynb
 ```
