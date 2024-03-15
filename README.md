@@ -6,6 +6,8 @@ Yuning You, Ruida Zhou, Jiwoong Park, Haotian Xu, Chao Tian, Zhangyang Wang, Yan
 
 In ICLR 2024.
 
+License: GPL v3. (If you are interested in a different license, for example, for commercial use, please contact us.)
+
 ## Overview
 A pipeline to compress 3D graphs into the latent space, where a (vectorial) diffusion model is implemented to capture the distribution.
 
