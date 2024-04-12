@@ -158,7 +158,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     # dataset and dataloader
-    dataset_train = Molecule3D(root='../data/molecule3d/', radius_cutoff=args.radius_cutoff, split='train', split_mode='random', args=args)
+    dataset_train = Molecule3D(root='../AE_geom_uncond_weights_and_data/', radius_cutoff=args.radius_cutoff, split='train', split_mode='random', args=args)
     dataloader_train = tgeom.loader.DataLoader(dataset_train, batch_size=args.batch_size, shuffle=True, num_workers=4)
     # dataset_val = Molecule3D(root='../data/molecule3d/', radius_cutoff=args.radius_cutoff, split='val', split_mode='random', args=args)
     # dataloader_val = tgeom.loader.DataLoader(dataset_val, batch_size=args.batch_size, shuffle=False, num_workers=4)
