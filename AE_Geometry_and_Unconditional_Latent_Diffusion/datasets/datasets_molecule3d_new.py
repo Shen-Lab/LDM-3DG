@@ -23,7 +23,7 @@ class Molecule3D(InMemoryDataset):
         self.split_mode = split_mode
         self.radius_cutoff = radius_cutoff
         self.root = root
-        self.target_df = pd.read_csv(osp.join(self.raw_dir, 'properties.csv'))
+        self.target_df = pd.read_csv('../AE_geom_uncond_weights_and_data/raw/properties.csv')
 
         self.transform = transform
         self.pre_transform = pre_transform
@@ -39,8 +39,8 @@ class Molecule3D(InMemoryDataset):
         assert False
         '''
 
-        self.data, self.slices = torch.load('./processed_data_2d_to_3d/data_' + split + '.pt')
-        with open('./processed_data_2d_to_3d/smiles_' + split + '.txt', 'r') as f:
+        self.data, self.slices = torch.load('../AE_geom_uncond_weights_and_data/processed_data_2d_to_3d/data_' + split + '.pt')
+        with open('../AE_geom_uncond_weights_and_data/processed_data_2d_to_3d/smiles_' + split + '.txt', 'r') as f:
             self.smiles_list = f.read().split('\n')[:-1]
         self.smiles2emb_dict = torch.load('../AE_topo_weights_and_data/smiles2emb_dict_new.pt', map_location='cpu')
 
