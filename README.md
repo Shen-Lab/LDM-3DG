@@ -20,7 +20,7 @@ A pipeline to compress 3D graphs into the latent space, where a (vectorial) diff
 ### Training Topological AE
 Config environment following https://github.com/wengong-jin/hgraph2graph#installation, or my conda environment file https://github.com/Shen-Lab/LDM-3DG/blob/main/environment_topo_ae.yml.
 
-Download data and trained model weights from https://drive.google.com/file/d/1tON3UDGP4rd4mgR1bofFoJKECg_yaCEK/view?usp=drive_link.
+Download data and trained model weights from https://zenodo.org/records/11005382.
 ```
 cd ./AE_Topology
 
@@ -53,7 +53,7 @@ python main_2dto3d_encoder_decoder_gssl.py --ddp_num_nodes 1 --ddp_device 1 --lo
 ```
 
 ### Generating embedding for qm9 and drugs
-Download code and generated qm9 latent embeddings from https://drive.google.com/file/d/1aZgOZSkjFKGIlebe23CQACVDYz8mcOh8/view?usp=drive_link.
+Download code and generated qm9 latent embeddings from https://zenodo.org/records/11005421.
 ```
 cd ./e3_diffusion_for_molecules
 # qm9
@@ -95,7 +95,7 @@ evaluate_conditional.ipynb
 
 
 ## 2. Conditional Generation on Geometric Object
-Download data, trained model weights and generated samples from https://drive.google.com/file/d/1razYUHMLu1W_4O3ZXMvQwHo02Bgn35oK/view?usp=drive_link.
+Download data, trained model weights and generated samples from https://zenodo.org/records/11005227.
 
 ### Training Topological AE
 ```
