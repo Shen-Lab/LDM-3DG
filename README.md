@@ -43,7 +43,7 @@ python generate_embedding.py --train ../AE_topo_weights_and_data/processed_data 
 ### Training Geometric AE
 Generic environment would work for the following programs, and my conda environment file https://github.com/Shen-Lab/LDM-3DG/blob/main/environment.yml is also provided for reference.
 
-Download trained model weights and generated samples from https://drive.google.com/file/d/1eNvj6nR-iPrQzg-m0cruViny_GnVUh0a/view?usp=sharing.
+Download trained model weights and generated samples from https://zenodo.org/records/11005378.
 
 ```
 cd ./AE_Geometry_and_Unconditional_Latent_Diffusion
