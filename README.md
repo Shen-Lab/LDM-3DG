@@ -95,7 +95,7 @@ evaluate_conditional.ipynb
 
 
 ## 2. Conditional Generation on Geometric Object
-Download data, trained model weights and generated samples from https://zenodo.org/records/11005227.
+Download data, trained model weights and generated samples from https://zenodo.org/records/11005227, https://zenodo.org/records/11005419.
 
 ### Training Topological AE
 ```
