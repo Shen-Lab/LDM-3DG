@@ -18,7 +18,7 @@ A pipeline to compress 3D graphs into the latent space, where a (vectorial) diff
 ## 1. Unconditional Generation
 
 ### Training Topological AE
-Config environment following https://github.com/wengong-jin/hgraph2graph#installation, or my conda environment file https://github.com/Shen-Lab/LDM-3DG/blob/main/environment_topo_ae.yml.
+Config environment following https://github.com/wengong-jin/hgraph2graph#installation, or my conda environment file https://github.com/Shen-Lab/LDM-3DG/blob/main/environment_topo_ae.yml. Specifically, ```rdkit=2019.03.4```
 
 Download data and trained model weights from https://zenodo.org/records/11005382.
 ```
