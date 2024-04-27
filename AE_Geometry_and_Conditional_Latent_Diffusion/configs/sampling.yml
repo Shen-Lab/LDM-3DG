@@ -1,6 +1,6 @@
 model:
   # checkpoint: ./pretrained_models/pretrained_diffusion.pt
-  checkpoint: logs_diffusion/training_2023_11_15__21_36_00/checkpoints/56700.pt
+  checkpoint: ../AE_geom_cond_weights_and_data/weight_ae.pt
 
 sample:
   seed: 2021
