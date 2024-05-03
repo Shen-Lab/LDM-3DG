@@ -98,6 +98,12 @@ evaluate_conditional.ipynb
 ## 2. Conditional Generation on Geometric Object
 Download data, trained model weights and generated samples from https://zenodo.org/records/11005227, https://zenodo.org/records/11005419.
 
+You might need the following packages for Vina Docking:
+```
+pip install meeko==0.1.dev3 scipy pdb2pqr vina==1.2.2 
+python -m pip install git+https://github.com/Valdes-Tresanco-MS/AutoDockTools_py3
+```
+
 ### Training Topological AE
 ```
 cd ./AE_Topology
