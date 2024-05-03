@@ -181,13 +181,16 @@ class VinaDockingTask(BaseDockingTask):
         return cls(protein_path, ligand_rdmol, **kwargs)
 
     def __init__(self, protein_path, ligand_rdmol, tmp_dir='./tmp', center=None,
-                 size_factor=2., buffer=5.0):
+                 size_factor=2., buffer=5.0, task_id=None):
         super().__init__(protein_path, ligand_rdmol)
         # self.conda_env = conda_env
         self.tmp_dir = os.path.realpath(tmp_dir)
         os.makedirs(tmp_dir, exist_ok=True)
 
-        self.task_id = get_random_id()
+        if task_id is None:
+            self.task_id = get_random_id()
+        else:
+            self.task_id = task_id
         self.receptor_id = self.task_id + '_receptor'
         self.ligand_id = self.task_id + '_ligand'
 
