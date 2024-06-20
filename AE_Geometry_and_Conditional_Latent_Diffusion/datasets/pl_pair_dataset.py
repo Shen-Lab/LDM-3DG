@@ -6,6 +6,7 @@ from tqdm.auto import tqdm
 
 from utils.data import PDBProtein, parse_sdf_file
 from .pl_data import ProteinLigandData, torchify_dict
+import pdb
 
 
 class PocketLigandPairDataset(Dataset):
@@ -56,8 +57,12 @@ class PocketLigandPairDataset(Dataset):
             subdir=False,
             readonly=False,  # Writable
         )
-        with open(self.index_path, 'rb') as f:
-            index = pickle.load(f)
+        try:
+            with open(self.index_path, 'rb') as f:
+                index = pickle.load(f)
+        except:
+            with open(os.path.join(self.raw_path, 'index.txt'), 'r') as f:
+                index = [line.split() for line in f if line != '']
 
         num_skipped = 0
         with db.begin(write=True, buffers=True) as txn:
@@ -83,6 +88,7 @@ class PocketLigandPairDataset(Dataset):
                     num_skipped += 1
                     print('Skipping (%d) %s' % (num_skipped, ligand_fn, ))
                     continue
+                
         db.close()
     
     def __len__(self):

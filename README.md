@@ -158,6 +158,19 @@ python -m scripts.sample_3d configs/sampling.yml --data_id $data_id
 python -m scripts.evaluate outputs --docking_mode vina_score --protein_root data/test_set --data_id $data_id
 ```
 
+### User mode: Sampling 3D molecules given protein target (xxxx.pdb)
+```
+cd ./AE_Geometry_and_Conditional_Latent_Diffusion
+```
+Put your protein pdb into ```./custom_data/target_protein.pdb```. Then
+```
+python -m scripts.sample_z_custom configs/training.yml
+python -m scripts.sample_2d_custom
+python -m scripts.sample_3d_custom configs/sampling.yml
+python -m scripts.read_mol_custom
+```
+The generated molecules will be presented in the ```.sdf``` format in ```./custom_data/mols```.
+
 
 ## Acknowledgements
 
